@@ -8,15 +8,15 @@ const upload = multer({ limits: { fileSize: 5 * 1024 * 1024 } });
 
 let model;
 
-// Load model once
+// Load MobileNetV2 NSFW model once
 (async () => {
-  console.log('Loading NSFW model...');
-  model = await nsfwjs.load();
-  console.log('NSFW model loaded');
+  console.log('Loading NSFW MobileNetV2 model...');
+  model = await nsfwjs.load({ type: 'mobilenet' }); // <-- Use MobileNetV2
+  console.log('NSFW MobileNetV2 model loaded');
 })();
 
 app.get('/', (req, res) => {
-  res.send('NSFW API online');
+  res.send('NSFW API online with MobileNetV2');
 });
 
 app.post('/scan', upload.single('image'), async (req, res) => {
