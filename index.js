@@ -1,13 +1,14 @@
-import express from 'express';
-import multer from 'multer';
-import * as tf from '@tensorflow/tfjs-node';
-import * as nsfwjs from 'nsfwjs';
+const express = require('express');
+const multer = require('multer');
+const tf = require('@tensorflow/tfjs-node');
+const nsfwjs = require('nsfwjs');
 
 const app = express();
 const upload = multer({ limits: { fileSize: 5 * 1024 * 1024 } });
 
 let model;
 
+// Load model once
 (async () => {
   console.log('Loading NSFW model...');
   model = await nsfwjs.load();
@@ -46,5 +47,5 @@ app.post('/scan', upload.single('image'), async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
